@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <Header/>
+    <NGB/>
+    <router-view></router-view>
+
   </div>
 </template>
 
 <script>
-import Header from "./components/publicvue/header.vue";
+import NGB from "./components/publicvue/ngb.vue";
 
 export default {
   name: 'App',
   components: {
-    Header
+    NGB
   }
 }
 </script>

@@ -12,7 +12,7 @@
             <el-badge :value="200" :max="99" class="item">
                 <el-button size="small">消息</el-button>
             </el-badge>
-            <el-avatar style="vertical-align: middle;margin: 0 20px;" :size="70" src="https://empty" @error="errorHandler">
+            <el-avatar style="vertical-align: middle;margin: 0 20px;" :size="70" src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" @error="errorHandler">
                 <img src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" />
             </el-avatar>
             <el-button type="primary" icon="el-icon-edit">上传</el-button>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    name: 'header',
+    name: 'ngb',
 
     data() {
         return {

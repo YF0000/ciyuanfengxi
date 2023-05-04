@@ -8,6 +8,6 @@ Vue.use(VueRouter)
 //创建并暴露一个路由器
 export default new VueRouter({
     routes:[
-        {path:"/home",name:"Home"}
+        {path:"/home",name:"Home",component:()=>import("../components/home")}
     ]
 })
