@@ -8,7 +8,6 @@
 
 <script>
 import NGB from "./components/publicvue/ngb.vue";
-
 export default {
   name: 'App',
   components: {
@@ -18,6 +17,7 @@ export default {
 </script>
 
 <style>
+@import url(./assets/css/reset.css);
 *{
   text-decoration: none;
   margin: 0;
@@ -29,5 +29,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background: rgb(247, 247, 247);
+  min-width: 1100px;
 }
 </style>

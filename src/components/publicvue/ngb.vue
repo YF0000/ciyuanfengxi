@@ -1,9 +1,14 @@
 <template>
     <div class="header">
         <div>
-            <router-link to="/home">首页</router-link>
-            <router-link to="/home">番剧</router-link>
-            <router-link to="/home">漫画</router-link>
+            <a class="logo" href="/">
+                <img src="https://lf1-cdn2-tos.bytegoofy.com/bcy/image/logo-home.ac29f0.png" alt="半次元">
+            </a>
+            <div class="nav_ul">
+                <router-link to="/home">首页</router-link>
+                <router-link to="/home">番剧</router-link>
+                <router-link to="/home">漫画</router-link>
+            </div>
             <el-select v-model="value" multiple filterable remote reserve-keyword placeholder="请输入关键词"
                 :remote-method="remoteMethod" :loading="loading">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
@@ -12,7 +17,12 @@
             <el-badge :value="200" :max="99" class="item">
                 <el-button size="small">消息</el-button>
             </el-badge>
-            <el-avatar style="vertical-align: middle;margin: 0 20px;" :size="70" src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" @error="errorHandler">
+            <div class="regist" v-if="isLogin">
+                <span>登录</span>
+                <span>注册</span>
+            </div>
+            <el-avatar v-else style="vertical-align: middle;margin: 0 20px;" :size="35"
+                src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" @error="errorHandler">
                 <img src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" />
             </el-avatar>
             <el-button type="primary" icon="el-icon-edit">上传</el-button>
@@ -26,6 +36,7 @@ export default {
 
     data() {
         return {
+            isLogin: true,
             options: [],
             value: [],
             list: [],
@@ -77,13 +88,22 @@ export default {
 </script>
 
 <style scoped>
-.header {
-    width: 100%;
+.logo>img{
+    width: 120px;
+    margin-left: -7%;
+    margin-right: 7%;
+    vertical-align: middle;
 }
-
-a {
-    color: #000;
+.header {
+    padding: 7px 0;
+    width: 100%;
+    background: white;
+}
+.nav_ul{
     display: inline-block;
+}
+.nav_ul a {
+    color: #000;
     width: 35px;
     height: 35px;
     line-height: 35px;
@@ -94,6 +114,14 @@ a {
     margin: 0 15%;
 }
 
+.regist {
+    display: inline-block;
+}
+
+.regist>span {
+    margin: 0 12px;
+    color: #5f5f5f;
+}
 .el-badge {
     margin: 0 1%;
 }
