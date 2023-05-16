@@ -36,10 +36,14 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
+<<<<<<< HEAD
     "rules": {
       "no-unused-vars": "off",
       "vue/multi-word-component-names": "off"
     }
+=======
+    "rules": {}
+>>>>>>> be0c276e8b73a2d6e8ed1a8783ac7c4786763c82
   },
   "browserslist": [
     "> 1%",
