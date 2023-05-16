@@ -25,7 +25,7 @@
                 src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" @error="errorHandler">
                 <img src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" />
             </el-avatar>
-            <el-button type="primary" icon="el-icon-edit">上传</el-button>
+            <el-button type="primary" icon="el-icon-edit">上传2333</el-button>
         </div>
     </div>
 </template>
