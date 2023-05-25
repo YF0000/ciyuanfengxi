@@ -1,23 +1,22 @@
 <template>
-<<<<<<< HEAD
-  <div class="post">
+  <div class="post" id="post">
     <ul>
       <li class="list letf_list">
         <div
           class="tiezi"
           v-for="(item, index) in dataList"
-          :key="item.id"
+          :key="index"
           v-if="index % 2 === 0"
         >
           <div class="user">
             <el-avatar
               :size="30"
-              src="https://p.qqan.com/up/2021-1/16100008745562727.jpg"
+              :src="item.user.userImg"
               @error="errorHandler"
             >
-              <img src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" />
+              <img :src="item.user.userImg" />
             </el-avatar>
-            <span>username</span>
+            <span>{{item.user.userName}}</span>
           </div>
           <div class="title">
             <p>{{ item.postTitle }}</p>
@@ -30,25 +29,25 @@
           <i class="el-icon-star-off">收藏</i>
           <i class="el-icon-chat-line-round">评论</i>
           <i class="el-icon-share">转发</i>
-          <i>❤点赞</i>
+          <i>❤点赞{{ item.postZan }}</i>
         </div>
       </li>
       <li class="list right_list">
         <div
           class="tiezi"
           v-for="(item, index) in dataList"
-          :key="item.id"
+          :key="index"
           v-if="!(index % 2 === 0)"
         >
           <div class="user">
             <el-avatar
               :size="30"
-              src="https://p.qqan.com/up/2021-1/16100008745562727.jpg"
+              :src="item.user.userImg"
               @error="errorHandler"
             >
-              <img src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" />
+              <img :src="item.user.userImg" />
             </el-avatar>
-            <span>username</span>
+            <span>{{item.user.userName}}</span>
           </div>
           <div class="title">
             <p>{{ item.postTitle }}</p>
@@ -65,140 +64,92 @@
         </div>
       </li>
     </ul>
+    <p v-if="isScroll" style="margin-top: 5px;" class="loading">
+      <span></span>
+    </p>
+
   </div>
 </template>
 
 <script>
+
 import service from "@/service";
 export default {
   name: "post",
 
   data() {
     return {
+      count:0,
       isTwo: 1,
-      dataList: [],
+      dataList:[],
+      isScroll:false,
     };
   },
   created() {
     this.getAll();
   },
   computed: {
-    getEgg() {
-      console.log(this.dataList);
-    },
+    
   },
-  mounted() {},
-
+  mounted() {
+    window.addEventListener('scroll',this.handlerScroll);
+  },
+  beforeDestroy(){
+    window.removeEventListener('scroll',this.handlerScroll);
+  },
   methods: {
+    handlerScroll(){
+      //页面卷去高度 + 浏览器可视窗口的高度 >= 整个页面的高度 
+    	if (window.pageYOffset + window.innerHeight >= document.body.offsetHeight) {
+          window.removeEventListener('scroll',this.handlerScroll);
+          this.isScroll=true;
+          this.count+=10;
+          setTimeout(()=>{
+            this.getAll();
+            window.addEventListener('scroll',this.handlerScroll);
+          },3000)
+         }
+    },
     errorHandler() {
       return true;
     },
     getAll() {
-      service.get("/posts").then((res) => {
-        console.log(res.data);
-        this.dataList = res.data;
+      service.get("/posts/"+this.count).then((res) => {
+        res.data.forEach(element => {
+          this.dataList.push(element);
+        });
+        console.log(this.dataList);
+        this.isScroll=false;
       });
     },
   },
-=======
-    <div class="post">
-        <ul>
-            <li class="list letf_list">
-                <div class="tiezi" v-for="(item,index) in dataList" :key="item.id" v-if="index%2===0">
-                    <div class="user">
-                        <el-avatar :size="30" src="https://p.qqan.com/up/2021-1/16100008745562727.jpg"
-                            @error="errorHandler">
-                            <img src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" />
-                        </el-avatar>
-                        <span>username</span>
-                    </div>
-                    <div class="title">
-                        <p>{{ item.postTitle }}</p>
-                    </div>
-                    <div class="T-img">
-                        <div>
-                            <a href="#">
-                                <img
-                                    :src=" item.postCoverUrl "></a>
-                        </div>
-                    </div>
-                    <i class="el-icon-star-off">收藏</i>
-                    <i class="el-icon-chat-line-round">评论</i>
-                    <i class="el-icon-share">转发</i>
-                    <i>❤点赞</i>
-                </div>
-            </li>
-            <li class="list right_list">
-                <div class="tiezi" v-for="(item,index) in dataList" :key="item.id" v-if="!(index%2===0)">
-                    <div class="user">
-                        <el-avatar :size="30" src="https://p.qqan.com/up/2021-1/16100008745562727.jpg"
-                            @error="errorHandler">
-                            <img src="https://p.qqan.com/up/2021-1/16100008745562727.jpg" />
-                        </el-avatar>
-                        <span>username</span>
-                    </div>
-                    <div class="title">
-                        <p>{{ item.postTitle }}</p>
-                    </div>
-                    <div class="T-img">
-                        <div>
-                            <a href="#">
-                                <img
-                                    :src=" item.postCoverUrl "></a>
-                        </div>
-                    </div>
-                    <i class="el-icon-star-off">收藏</i>
-                    <i class="el-icon-chat-line-round">评论</i>
-                    <i class="el-icon-share">转发</i>
-                    <i>❤点赞</i>
-                </div>
-            </li>
-        </ul>
-    </div>
-</template>
-
-<script>
-import service from '@/service';
-export default {
-    name: 'post',
-
-    data() {
-        return {
-            isTwo: 1,
-            dataList:[]
-        };
-    },
-    created(){
-        this.getAll();
-    },
-    computed:{
-        getEgg(){
-            console.log(this.dataList);
-        }
-    },
-    mounted() {
-
-    },
-
-    methods: {
-        errorHandler() {
-            return true
-        },
-        getAll(){
-            service.get("/posts").then(res=>{
-                console.log(res.data);
-                this.dataList=res.data
-            })
-        }
-    },
->>>>>>> be0c276e8b73a2d6e8ed1a8783ac7c4786763c82
 };
 </script>
 
 <style scoped>
+.loading span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #409eff;
+  border-left: transparent;
+  animation: zhuan 0.5s linear infinite;
+  border-radius: 50%;
+}
+@keyframes zhuan {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.post{
+  padding-bottom: 150px;
+}
 .user {
-<<<<<<< HEAD
-  margin: 10px 10px;
+  margin: 10px 0;
+  margin-left: 10px;
   text-align: left;
 }
 
@@ -208,12 +159,14 @@ export default {
 }
 
 .title {
-  font-family: "Lucida Console Emoji", Courier, monospace;
+  padding:0 15px;
+  width: 95%;
+  font-size: 14px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .tiezi {
   padding: 1% 1%;
-  width: 98%;
   background: #ffffff;
   border-radius: 8px;
   margin: 20px 0;
@@ -225,18 +178,20 @@ i {
 
 .T-img {
   margin: 10px auto;
-  width: 98%;
+  width: 90%;
 }
 
 .T-img img {
   width: auto;
   height: auto;
+  min-width: 100%;
   max-width: 100%;
-  max-height: 100%;
+  border-radius: 6.5px;
 }
 ul {
   width: 50%;
   margin: 0 auto;
+  overflow: auto;
 }
 ul:after {
   display: block;
@@ -246,8 +201,9 @@ ul:after {
 .list {
   display: block;
   float: left;
-  width: 47.9%;
+  width: 45%;
   margin: 20px 10px;
+  overflow: hidden;
 }
 
 .list_left {
@@ -255,64 +211,3 @@ ul:after {
 .list_right {
 }
 </style>
-=======
-    margin: 10px 10px;
-    text-align: left;
-}
-
-.user * {
-    margin: 0 3px;
-    vertical-align: middle;
-}
-
-.title {
-    font-family: "Lucida Console Emoji", Courier, monospace;
-}
-
-.tiezi {
-    padding: 1% 1%;
-    width: 98%;
-    background: #ffffff;
-    border-radius: 8px;
-    margin: 20px 0;
-}
-
-i {
-    margin: 0 15px;
-}
-
-.T-img {
-    margin: 10px auto;
-    width: 98%;
-}
-
-.T-img img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-}
-ul{
-    width: 50%;
-    margin: 0 auto;
-}
-ul:after{
-    display: block;
-    content: "";
-    clear: both;
-}
-.list{
-    display: block;
-    float: left;
-    width: 47.9%;
-    margin: 20px 10px;
-}
-
-.list_left{
-    
-}
-.list_right{
-    
-}
-</style>
->>>>>>> be0c276e8b73a2d6e8ed1a8783ac7c4786763c82
